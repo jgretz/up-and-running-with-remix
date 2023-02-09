@@ -40,6 +40,31 @@ async function seed() {
     },
   });
 
+  const posts = [
+    {
+      slug: "my-first-post",
+      title: "My first Post!",
+      markdown: "# This is my first post!",
+    },
+    {
+      slug: "trail-riding-with-onewheel",
+      title: "Trail Riding with One Wheel",
+      markdown: `
+        # Floating the trails
+
+        Have you ever tried riding a onewheel? It's and out-of-this-world _experience_!
+      `.trim(),
+    },
+  ];
+
+  for (const post of posts) {
+    await prisma.post.upsert({
+      where: { slug: post.slug },
+      update: post,
+      create: post,
+    });
+  }
+
   console.log(`Database has been seeded. 🌱`);
 }
 
